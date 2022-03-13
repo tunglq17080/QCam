@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Q Camera</title>
 	<base href="{{asset('')}}">
@@ -247,27 +248,29 @@
 									<div class="success__text-wrap"><i class="fas fa-check"></i>
 
 										<span>Item is added successfully!</span></div>
-									<div class="success__img-wrap">
+									{{-- <div class="success__img-wrap">
 
-										<img class="u-img-fluid" src="images/product/electronic/product1.jpg" alt=""></div>
+										<img class="u-img-fluid" src="images/product/electronic/product1.jpg" alt="">
+									</div>
 									<div class="success__info-wrap">
 
 										<span class="success__name">Beats Bomb Wireless Headphone</span>
 
-										<span class="success__quantity">Quantity: 1</span>
+										<span class="success__quantity">Quantity: <span>1</span></span>
 
-										<span class="success__price">$170.00</span></div>
+										<span class="success__price">$170.00</span>
+									</div> --}}
 								</div>
 							</div>
 							<div class="col-lg-6 col-md-12">
 								<div class="s-option">
 
-									<span class="s-option__text">1 item (s) in your cart</span>
+									<span class="s-option__text"><span>1</span> item (s) in your cart</span>
 									<div class="s-option__link-box">
 
 										<a class="s-option__link btn--e-white-brand-shadow" data-dismiss="modal">CONTINUE SHOPPING</a>
 
-										<a class="s-option__link btn--e-white-brand-shadow" href="cart.html">VIEW CART</a>
+										<a class="s-option__link btn--e-white-brand-shadow" href="/cart">VIEW CART</a>
 
 										<a class="s-option__link btn--e-brand-shadow" href="checkout.html">PROCEED TO CHECKOUT</a></div>
 								</div>
@@ -279,50 +282,6 @@
 		</div>
 		<!--====== End - Add to Cart Modal ======-->
 
-
-		<!--====== Newsletter Subscribe Modal ======-->
-		<div class="modal fade new-l" id="newsletter-modal">
-			<div class="modal-dialog modal-dialog-centered">
-				<div class="modal-content modal--shadow">
-
-					<button class="btn new-l__dismiss fas fa-times" type="button" data-dismiss="modal"></button>
-					<div class="modal-body">
-						<div class="row u-s-m-x-0">
-							<div class="col-lg-6 new-l__col-1 u-s-p-x-0">
-
-								<a class="new-l__img-wrap u-d-block" href="shop-side-version-2.html">
-
-									<img class="u-img-fluid u-d-block" src="images/newsletter/newsletter.jpg" alt=""></a></div>
-							<div class="col-lg-6 new-l__col-2">
-								<div class="new-l__section u-s-m-t-30">
-									<div class="u-s-m-b-8 new-l--center">
-										<h3 class="new-l__h3">Newsletter</h3>
-									</div>
-									<div class="u-s-m-b-30 new-l--center">
-										<p class="new-l__p1">Sign up for emails to get the scoop on new arrivals, special sales and more.</p>
-									</div>
-									<form class="new-l__form">
-										<div class="u-s-m-b-15">
-
-											<input class="news-l__input" type="text" placeholder="E-mail Address"></div>
-										<div class="u-s-m-b-15">
-
-											<button class="btn btn--e-brand-b-2" type="submit">Sign up!</button></div>
-									</form>
-									<div class="u-s-m-b-15 new-l--center">
-										<p class="new-l__p2">By Signing up, you agree to receive Reshop offers,<br />promotions and other commercial messages. You may unsubscribe at any time.</p>
-									</div>
-									<div class="u-s-m-b-15 new-l--center">
-
-										<a class="new-l__link" data-dismiss="modal">No Thanks</a></div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!--====== End - Newsletter Subscribe Modal ======-->
 		<!--====== End - Modal Section ======-->
 	</div>
 	<!--====== End - Main App ======-->
@@ -348,7 +307,7 @@
 
 	<!--====== App ======-->
 	<script src="js/app.js"></script>
-
+	<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/1.4.5/numeral.min.js"></script>
 	<!--====== Noscript ======-->
 	<noscript>
 		<div class="app-setting">
@@ -365,5 +324,188 @@
 			</div>
 		</div>
 	</noscript>
+
+	<script>
+	$(document).on("click",".submit-cart",function(event) {
+	//$('.submit-cart').click(function(){
+		event.preventDefault();
+		// var productId = $(this).parent().find("input[name='ProductId']").val();
+		var productId = $(this).data('id');
+		$.ajax ({
+			headers: {
+		    	'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+    		type: 'post',
+    		dataType: 'html',
+   			url: '<?php echo url('/cart/add');?>/'+productId, 
+    		success: 
+        		function (data) {
+        			var result = ''; 
+        			var total = 0;
+        			var totalQty = 0;
+        			var cart = '';
+        			var obj = jQuery.parseJSON(data);
+        			var strText = "";
+        			$.each( obj, function( key, value ) {
+        				total += (value.qty*value.price);
+        				totalQty += parseInt(value.qty);
+        				console.log(value); 
+						result += `<div class="card-mini-product">
+							<div class="mini-product">
+								<div class="mini-product__image-wrapper">
+
+									<a class="mini-product__link" href="product-detail.html">
+
+										<img class="u-img-fluid" src="images/product/`+value.options.cat_slug+`/`+value.options.img+`" alt=""></a></div>
+								<div class="mini-product__info-wrapper">
+
+									<span class="mini-product__category">
+
+										<a href="shop-side-version-2.html">Electronics</a></span>
+
+									<span class="mini-product__name">
+
+										<a href="product-detail.html">`+ value.name + `</a></span>
+
+									<span class="mini-product__quantity">`+value.qty+` x</span>
+
+									<span class="mini-product__price">`+numeral(value.price).format('0,0')+` đ</span></div>
+							</div>
+
+							<a class="mini-product__delete-link far fa-trash-alt deleteCart" data-id="`+value.rowId+`"></a>
+						</div>`;
+					   	// result += "<div class='cart-item'>" +
+		                // 		"<div class='media'>" + 
+		                // 		"<a class='pull-left' href='#''><img src='source/image/product/"+value.options.img+"' alt='' ></a>"+			             
+		                // 		"<div class='media-body'>"+
+		                //     	"<input type='hidden' value='"+value.rowId+"' id='rowId'>"+
+		                //     	"<a ><button type='button' class='remove-cart-item deleteCart'>×</button></a>"+
+		                //     	"<span class='cart-item-title'>"+ value.name + "</span>"+
+		                // 		"<span class='cart-item-amount'>"+value.qty+"*<span>"+numeral(value.price).format('0,0')+"</span></span>"+
+	                	// 		"</div>"+
+	                	// 	"</div>"+
+	                	// 	"</div>";
+					});
+					// result+= "<div class='cart-caption' id='updateCart' >"+
+					// 		"<div class='cart-total text-right'>Tổng tiền: <span class='cart-total-value'>"+numeral(total).format('0,0')+"</span></div>"+
+					// 		"<div class='clearfix'></div>"+
+
+					// 		"<div class='center'>"+
+					// 			"<div class='space10'>&nbsp;</div>"+
+					// 			"<a href='{{url('cart')}}' class='beta-btn primary text-center'>Đặt hàng <i class='fa fa-chevron-right'></i></a>"+
+					// 		"</div>"+
+					// 	"</div>";
+
+					$(".s-option__text > span").text(totalQty);
+		            if(totalQty>0 ) {
+		                strText = totalQty;
+		                $('div#block').css({'display':'block'});
+		            }
+		            else {
+		                strText = "Trống";
+		            }
+					$(".mini-product-container .card-mini-product").remove();
+					$(".mini-product-container").html(result);
+		            // cart+= "<i class='fa fa-shopping-cart'></i> Giỏ hàng "+
+					// 		"( "+ strText +" )" +
+					// 		"<i class='fa fa-chevron-down'></i>"
+	        		// console.log(cart);
+					$(".mini-product-stat .subtotal-value").text(numeral(total).format('0,0'));
+	        		// $('.beta-select').html(cart);
+             		// $('#add-cart-item').html(result);
+             	},
+		});
+	});
+
+	$(document).on("click",".deleteCart",function(event){
+		// var rowId = $(this).parent().parent().find('#rowId').val();
+		var rowId = $(this).data('id');
+		event.preventDefault();
+		$.ajax ({
+        	type: 'get',
+        	dataType: 'html',
+       		url: '<?php echo url('/cart/delete');?>/'+rowId,
+        	success: 
+    			function (data) {
+    				var result = ''; 
+        			var total = 0;
+        			var totalQty = 0;
+        			var cart = '';
+        			var obj = jQuery.parseJSON(data);
+        			var strText = "";
+        			$.each( obj, function( key, value ) {
+        				total += (value.qty*value.price);
+        				totalQty += parseInt(value.qty);
+        				console.log(value); 
+						result += `<div class="card-mini-product">
+							<div class="mini-product">
+								<div class="mini-product__image-wrapper">
+
+									<a class="mini-product__link" href="product-detail.html">
+
+										<img class="u-img-fluid" src="images/product/`+value.options.cat_slug+`/`+value.options.img+`" alt=""></a></div>
+								<div class="mini-product__info-wrapper">
+
+									<span class="mini-product__category">
+
+										<a href="shop-side-version-2.html">Electronics</a></span>
+
+									<span class="mini-product__name">
+
+										<a href="product-detail.html">`+ value.name + `</a></span>
+
+									<span class="mini-product__quantity">`+value.qty+` x</span>
+
+									<span class="mini-product__price">`+numeral(value.price).format('0,0')+` đ</span></div>
+							</div>
+
+							<a class="mini-product__delete-link far fa-trash-alt deleteCart" data-id="`+value.rowId+`"></a>
+						</div>`;
+					   	// result += "<div class='cart-item'>" +
+		                // 		"<div class='media'>" + 
+		                // 		"<a class='pull-left' href='#''><img src='source/image/product/"+value.options.img+"' alt='' ></a>"+			             
+		                // 		"<div class='media-body'>"+
+		                //     	"<input type='hidden' value='"+value.rowId+"' id='rowId'>"+
+		                //     	"<a ><button type='button' class='remove-cart-item deleteCart'>×</button></a>"+
+		                //     	"<span class='cart-item-title'>"+ value.name + "</span>"+
+		                // 		"<span class='cart-item-amount'>"+value.qty+"*<span>"+numeral(value.price).format('0,0')+"</span></span>"+
+	                	// 		"</div>"+
+	                	// 	"</div>"+
+	                	// 	"</div>";
+					});
+					// result+= "<div class='cart-caption' id='updateCart' >"+
+					// 		"<div class='cart-total text-right'>Tổng tiền: <span class='cart-total-value'>"+numeral(total).format('0,0')+"</span></div>"+
+					// 		"<div class='clearfix'></div>"+
+
+					// 		"<div class='center'>"+
+					// 			"<div class='space10'>&nbsp;</div>"+
+					// 			"<a href='{{url('cart')}}' class='beta-btn primary text-center'>Đặt hàng <i class='fa fa-chevron-right'></i></a>"+
+					// 		"</div>"+
+					// 	"</div>";
+
+					$(".s-option__text > span").text(totalQty);
+		            if(totalQty>0 ) {
+		                strText = totalQty;
+		                $('div#block').css({'display':'block'});
+		            }
+		            else {
+		                strText = "Trống";
+		            }
+					$(".mini-product-container .card-mini-product").remove();
+					$(".mini-product-container").html(result);
+		            // cart+= "<i class='fa fa-shopping-cart'></i> Giỏ hàng "+
+					// 		"( "+ strText +" )" +
+					// 		"<i class='fa fa-chevron-down'></i>"
+	        		// console.log(cart);
+					$(".mini-product-stat .subtotal-value").text(numeral(total).format('0,0'));
+	        		// $('.beta-select').html(cart);
+             		// $('#add-cart-item').html(result);
+	            },
+	            error: function (request, status, error) {
+				        // alert(request.responseText);
+				}
+		});
+	});
+	</script>
 </body>
 </html>

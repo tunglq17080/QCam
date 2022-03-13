@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +20,14 @@ Route::get('/', [HomeController::class, 'index']);
 Route::get('/checkout', function () {
     return view('page.checkout');
 });
-Route::get('/product-detail/{id}', [ProductController::class, 'show']);
-Route::get('/product-detail', function () {
-    return view('page.product-detail');
+Route::get('/cart', function () {
+    return view('page.shopping-cart');
 });
+Route::get('/product-detail/{id}', [ProductController::class, 'show']);
+
+// Cart
+Route::get('/cart', [CartController::class, 'listCart']);
+Route::post('/cart/add/{id}', [CartController::class, 'addItemCart']);
+Route::post('/cart/update/{id}', [CartController::class, 'updateItemCart']);
+Route::get('/cart/delete/{id}', [CartController::class, 'deleteItemCart']);
+Route::post('/cart/add/{id}/qty', [CartController::class, 'addItemCartQty']);

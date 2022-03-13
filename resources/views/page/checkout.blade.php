@@ -274,78 +274,29 @@
                             <div class="o-summary">
                                 <div class="o-summary__section u-s-m-b-30">
                                     <div class="o-summary__item-wrap gl-scroll">
+                                        <?php $content=Cart::Content() ?>
+                                        @if(Cart::count()>0)
+                                        @foreach($content as $item)
                                         <div class="o-card">
                                             <div class="o-card__flex">
                                                 <div class="o-card__img-wrap">
 
-                                                    <img class="u-img-fluid" src="images/product/electronic/product3.jpg" alt=""></div>
+                                                    <img class="u-img-fluid" src="images/product/{{$item->options->has('cat_slug')?$item->options->cat_slug:''}}/{{$item->options->has('img')?$item->options->img:''}}" alt=""></div>
                                                 <div class="o-card__info-wrap">
 
                                                     <span class="o-card__name">
 
-                                                        <a href="product-detail.html">Yellow Wireless Headphone</a></span>
+                                                        <a href="product-detail.html">{{$item->name}}</a></span>
 
-                                                    <span class="o-card__quantity">Quantity x 1</span>
+                                                    <span class="o-card__quantity">x {{$item->qty}}</span>
 
-                                                    <span class="o-card__price">$150.00</span></div>
+                                                    <span class="o-card__price">{{number_format($item->price)}} đ</span></div>
                                             </div>
 
-                                            <a class="o-card__del far fa-trash-alt"></a>
+                                            <a class="o-card__del far fa-trash-alt deleteCart" data-id="{{$item->rowId}}"></a>
                                         </div>
-                                        <div class="o-card">
-                                            <div class="o-card__flex">
-                                                <div class="o-card__img-wrap">
-
-                                                    <img class="u-img-fluid" src="images/product/electronic/product18.jpg" alt=""></div>
-                                                <div class="o-card__info-wrap">
-
-                                                    <span class="o-card__name">
-
-                                                        <a href="product-detail.html">Nikon DSLR Camera 4k</a></span>
-
-                                                    <span class="o-card__quantity">Quantity x 1</span>
-
-                                                    <span class="o-card__price">$150.00</span></div>
-                                            </div>
-
-                                            <a class="o-card__del far fa-trash-alt"></a>
-                                        </div>
-                                        <div class="o-card">
-                                            <div class="o-card__flex">
-                                                <div class="o-card__img-wrap">
-
-                                                    <img class="u-img-fluid" src="images/product/women/product8.jpg" alt=""></div>
-                                                <div class="o-card__info-wrap">
-
-                                                    <span class="o-card__name">
-
-                                                        <a href="product-detail.html">New Dress D Nice Elegant</a></span>
-
-                                                    <span class="o-card__quantity">Quantity x 1</span>
-
-                                                    <span class="o-card__price">$150.00</span></div>
-                                            </div>
-
-                                            <a class="o-card__del far fa-trash-alt"></a>
-                                        </div>
-                                        <div class="o-card">
-                                            <div class="o-card__flex">
-                                                <div class="o-card__img-wrap">
-
-                                                    <img class="u-img-fluid" src="images/product/men/product8.jpg" alt=""></div>
-                                                <div class="o-card__info-wrap">
-
-                                                    <span class="o-card__name">
-
-                                                        <a href="product-detail.html">New Fashion D Nice Elegant</a></span>
-
-                                                    <span class="o-card__quantity">Quantity x 1</span>
-
-                                                    <span class="o-card__price">$150.00</span></div>
-                                            </div>
-
-                                            <a class="o-card__del far fa-trash-alt"></a>
-                                        </div>
+                                        @endforeach
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="o-summary__section u-s-m-b-30">
