@@ -11,7 +11,9 @@
 
                 <a class="main-logo" href="/">
 
-                    <img src="images/logo/logo-1.png" alt=""></a>
+                    <img src="images/qCam.png" alt="" style="width:50px;">
+                    {{-- <img src="images/logo/logo-1.png" alt=""> --}}
+                </a>
                 <!--====== End - Main Logo ======-->
 
 
@@ -38,19 +40,27 @@
 
                         <!--====== List ======-->
                         <ul class="ah-list ah-list--design1 ah-list--link-color-secondary">
-                            <li class="has-dropdown" data-tooltip="tooltip" data-placement="left" title="Account">
+                            <li class="has-dropdown" data-tooltip="tooltip" data-placement="left" title="{{(Auth::user()) ? Auth::user()->name : 'Account'}}">
 
                                 <a><i class="far fa-user-circle"></i></a>
 
                                 <!--====== Dropdown ======-->
 
                                 <span class="js-menu-toggle"></span>
+                                @if(Auth::user())
                                 <ul style="width:120px">
                                     <li>
 
-                                        <a href="dashboard.html"><i class="fas fa-user-circle u-s-m-r-6"></i>
+                                        <a href="{{url('profile')}}"><i class="fas fa-user-circle u-s-m-r-6"></i>
 
                                             <span>Account</span></a></li>
+                                    <li>
+                                        <a href="{{url('logout')}}"><i class="fas fa-lock-open u-s-m-r-6"></i>
+
+                                            <span>Signout</span></a></li>
+                                </ul>
+                                @else
+                                <ul style="width:120px">
                                     <li>
 
                                         <a href="signup.html"><i class="fas fa-user-plus u-s-m-r-6"></i>
@@ -58,18 +68,16 @@
                                             <span>Signup</span></a></li>
                                     <li>
 
-                                        <a href="signin.html"><i class="fas fa-lock u-s-m-r-6"></i>
+                                        <a href="{{url('login')}}"><i class="fas fa-lock u-s-m-r-6"></i>
 
                                             <span>Signin</span></a></li>
-                                    <li>
-
-                                        <a href="signup.html"><i class="fas fa-lock-open u-s-m-r-6"></i>
-
-                                            <span>Signout</span></a></li>
                                 </ul>
+                                @endif
                                 <!--====== End - Dropdown ======-->
                             </li>
-                            <li class="has-dropdown" data-tooltip="tooltip" data-placement="left" title="Settings">
+                            @if(Auth::user())
+                            @if(Auth::user()->isAdmin())
+                            <li class="has-dropdown" data-tooltip="tooltip" data-placement="left" title="Dashboard">
 
                                 <a><i class="fas fa-user-cog"></i></a>
 
@@ -77,52 +85,16 @@
 
                                 <span class="js-menu-toggle"></span>
                                 <ul style="width:120px">
-                                    <li class="has-dropdown has-dropdown--ul-right-100">
+                                    <li>
 
-                                        <a>Language<i class="fas fa-angle-down u-s-m-l-6"></i></a>
+                                        <a href="{{url('admin/dashboard')}}"><i class="fas fa-user-circle u-s-m-r-6"></i>
 
-                                        <!--====== Dropdown ======-->
-
-                                        <span class="js-menu-toggle"></span>
-                                        <ul style="width:120px">
-                                            <li>
-
-                                                <a class="u-c-brand">ENGLISH</a></li>
-                                            <li>
-
-                                                <a>ARABIC</a></li>
-                                            <li>
-
-                                                <a>FRANCAIS</a></li>
-                                            <li>
-
-                                                <a>ESPANOL</a></li>
-                                        </ul>
-                                        <!--====== End - Dropdown ======-->
-                                    </li>
-                                    <li class="has-dropdown has-dropdown--ul-right-100">
-
-                                        <a>Currency<i class="fas fa-angle-down u-s-m-l-6"></i></a>
-
-                                        <!--====== Dropdown ======-->
-
-                                        <span class="js-menu-toggle"></span>
-                                        <ul style="width:225px">
-                                            <li>
-
-                                                <a class="u-c-brand">$ - US DOLLAR</a></li>
-                                            <li>
-
-                                                <a>£ - BRITISH POUND STERLING</a></li>
-                                            <li>
-
-                                                <a>€ - EURO</a></li>
-                                        </ul>
-                                        <!--====== End - Dropdown ======-->
-                                    </li>
+                                            <span>Admin Page</span></a></li>
                                 </ul>
                                 <!--====== End - Dropdown ======-->
                             </li>
+                            @endif
+                            @endif
                             <li data-tooltip="tooltip" data-placement="left" title="Contact">
 
                                 <a href="tel:+0900901904"><i class="fas fa-phone-volume"></i></a></li>
@@ -141,7 +113,11 @@
     </nav>
     <!--====== End - Nav 1 ======-->
 
-
+    @if(Session::has('flash_message'))
+        <div class="alert alert-success alert-success-bost">
+            {!! Session::get('flash_message') !!}
+        </div>
+    @endif
     <!--====== Nav 2 ======-->
     <nav class="secondary-nav-wrapper">
         <div class="container">

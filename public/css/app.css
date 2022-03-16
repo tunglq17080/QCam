@@ -50,7 +50,7 @@ custom-colors, box-mode, custom-header, custom-menu, custom-logo, featured-image
 /**
  * Setup box-sizing
  */
-html {
+ html {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent; }
   html.boxed {
@@ -1077,9 +1077,10 @@ input::-ms-clear {
       height: 35px;
       line-height: 35px;
       background-color: rgba(255, 255, 255, 0.25);
-      color: #ffffff;
+      color: #ffffff!important;
       font-size: 12px;
-      transition: all 0.3s ease 0s; }
+      transition: all 0.3s ease 0s;
+      }
       .product-o__action-list > li > a:hover {
         background-color: #333333;
         color: #ffffff; }

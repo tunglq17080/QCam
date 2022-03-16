@@ -123,33 +123,16 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <h1 class="checkout-f__h1">DELIVERY INFORMATION</h1>
-                            <form class="checkout-f__delivery">
+                            <form class="checkout-f__delivery" action="{{url('confirmCheckout')}}" method="post">
                                 <div class="u-s-m-b-30">
-                                    <div class="u-s-m-b-15">
-
-                                        <!--====== Check Box ======-->
-                                        <div class="check-box">
-
-                                            <input type="checkbox" id="get-address">
-                                            <div class="check-box__state check-box__state--primary">
-
-                                                <label class="check-box__label" for="get-address">Use default shipping and billing address from account</label></div>
-                                        </div>
-                                        <!--====== End - Check Box ======-->
-                                    </div>
-
+                                    <input type="hidden" name="_token" value="{{csrf_token()}}">
                                     <!--====== First Name, Last Name ======-->
                                     <div class="gl-inline">
                                         <div class="u-s-m-b-15">
 
-                                            <label class="gl-label" for="billing-fname">FIRST NAME *</label>
+                                            <label class="gl-label" for="billing-fname">FULL NAME *</label>
 
-                                            <input class="input-text input-text--primary-style" type="text" id="billing-fname" data-bill=""></div>
-                                        <div class="u-s-m-b-15">
-
-                                            <label class="gl-label" for="billing-lname">LAST NAME *</label>
-
-                                            <input class="input-text input-text--primary-style" type="text" id="billing-lname" data-bill=""></div>
+                                            <input class="input-text input-text--primary-style" value="{{Auth::user()->name}}" name="name"  type="text" id="billing-fname" data-bill=""></div>
                                     </div>
                                     <!--====== End - First Name, Last Name ======-->
 
@@ -159,7 +142,7 @@
 
                                         <label class="gl-label" for="billing-email">E-MAIL *</label>
 
-                                        <input class="input-text input-text--primary-style" type="text" id="billing-email" data-bill=""></div>
+                                        <input class="input-text input-text--primary-style" value="{{Auth::user()->email}}" name="email" type="text" id="billing-email" data-bill=""></div>
                                     <!--====== End - E-MAIL ======-->
 
 
@@ -168,7 +151,7 @@
 
                                         <label class="gl-label" for="billing-phone">PHONE *</label>
 
-                                        <input class="input-text input-text--primary-style" type="text" id="billing-phone" data-bill=""></div>
+                                        <input class="input-text input-text--primary-style" value="{{Auth::user()->phone}}"  name="phone" type="text" id="billing-phone" data-bill=""></div>
                                     <!--====== End - PHONE ======-->
 
 
@@ -177,93 +160,15 @@
 
                                         <label class="gl-label" for="billing-street">STREET ADDRESS *</label>
 
-                                        <input class="input-text input-text--primary-style" type="text" id="billing-street" placeholder="House name and street name" data-bill=""></div>
-                                    <div class="u-s-m-b-15">
-
-                                        <label for="billing-street-optional"></label>
-
-                                        <input class="input-text input-text--primary-style" type="text" id="billing-street-optional" placeholder="Apartment, suite unit etc. (optional)" data-bill=""></div>
+                                        <input class="input-text input-text--primary-style" value="{{Auth::user()->address}}"  name="address" type="text" id="billing-street" placeholder="House name and street name" data-bill=""></div>
                                     <!--====== End - Street Address ======-->
 
-
-                                    <!--====== Country ======-->
-                                    <div class="u-s-m-b-15">
-
-                                        <!--====== Select Box ======-->
-
-                                        <label class="gl-label" for="billing-country">COUNTRY *</label><select class="select-box select-box--primary-style" id="billing-country" data-bill="">
-                                            <option selected value="">Choose Country</option>
-                                            <option value="uae">United Arab Emirate (UAE)</option>
-                                            <option value="uk">United Kingdom (UK)</option>
-                                            <option value="us">United States (US)</option>
-                                        </select>
-                                        <!--====== End - Select Box ======-->
-                                    </div>
-                                    <!--====== End - Country ======-->
-
-
-                                    <!--====== Town / City ======-->
-                                    <div class="u-s-m-b-15">
-
-                                        <label class="gl-label" for="billing-town-city">TOWN/CITY *</label>
-
-                                        <input class="input-text input-text--primary-style" type="text" id="billing-town-city" data-bill=""></div>
-                                    <!--====== End - Town / City ======-->
-
-
-                                    <!--====== STATE/PROVINCE ======-->
-                                    <div class="u-s-m-b-15">
-
-                                        <!--====== Select Box ======-->
-
-                                        <label class="gl-label" for="billing-state">STATE/PROVINCE *</label><select class="select-box select-box--primary-style" id="billing-state" data-bill="">
-                                            <option selected value="">Choose State/Province</option>
-                                            <option value="al">Alabama</option>
-                                            <option value="al">Alaska</option>
-                                            <option value="ny">New York</option>
-                                        </select>
-                                        <!--====== End - Select Box ======-->
-                                    </div>
-                                    <!--====== End - STATE/PROVINCE ======-->
-
-
-                                    <!--====== ZIP/POSTAL ======-->
-                                    <div class="u-s-m-b-15">
-
-                                        <label class="gl-label" for="billing-zip">ZIP/POSTAL CODE *</label>
-
-                                        <input class="input-text input-text--primary-style" type="text" id="billing-zip" placeholder="Zip/Postal Code" data-bill=""></div>
-                                    <!--====== End - ZIP/POSTAL ======-->
                                     <div class="u-s-m-b-10">
 
-                                        <!--====== Check Box ======-->
-                                        <div class="check-box">
-
-                                            <input type="checkbox" id="make-default-address" data-bill="">
-                                            <div class="check-box__state check-box__state--primary">
-
-                                                <label class="check-box__label" for="make-default-address">Make default shipping and billing address</label></div>
-                                        </div>
-                                        <!--====== End - Check Box ======-->
-                                    </div>
-                                    <div class="u-s-m-b-10">
-
-                                        <a class="gl-link" href="#create-account" data-toggle="collapse">Want to create a new account?</a></div>
-                                    <div class="collapse u-s-m-b-15" id="create-account">
-
-                                        <span class="gl-text u-s-m-b-15">Create an account by entering the information below. If you are a returning customer please login at the top of the page.</span>
-                                        <div>
-
-                                            <label class="gl-label" for="reg-password">Account Password *</label>
-
-                                            <input class="input-text input-text--primary-style" type="text" data-bill id="reg-password"></div>
-                                    </div>
-                                    <div class="u-s-m-b-10">
-
-                                        <label class="gl-label" for="order-note">ORDER NOTE</label><textarea class="text-area text-area--primary-style" id="order-note"></textarea></div>
+                                        <label class="gl-label" for="order-note">ORDER NOTE</label><textarea name="note" class="text-area text-area--primary-style" id="order-note"></textarea></div>
                                     <div>
 
-                                        <button class="btn btn--e-transparent-brand-b-2" type="submit">SAVE</button></div>
+                                        <button class="btn btn--e-transparent-brand-b-2" type="submit">PLACE ORDER</button></div>
                                 </div>
                             </form>
                         </div>
@@ -301,42 +206,11 @@
                                 </div>
                                 <div class="o-summary__section u-s-m-b-30">
                                     <div class="o-summary__box">
-                                        <h1 class="checkout-f__h1">SHIPPING & BILLING</h1>
-                                        <div class="ship-b">
-
-                                            <span class="ship-b__text">Ship to:</span>
-                                            <div class="ship-b__box u-s-m-b-10">
-                                                <p class="ship-b__p">4247 Ashford Drive Virginia VA-20006 USA (+0) 900901904</p>
-
-                                                <a class="ship-b__edit btn--e-transparent-platinum-b-2" data-modal="modal" data-modal-id="#edit-ship-address">Edit</a>
-                                            </div>
-                                            <div class="ship-b__box">
-
-                                                <span class="ship-b__text">Bill to default billing address</span>
-
-                                                <a class="ship-b__edit btn--e-transparent-platinum-b-2" data-modal="modal" data-modal-id="#edit-ship-address">Edit</a></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="o-summary__section u-s-m-b-30">
-                                    <div class="o-summary__box">
                                         <table class="o-summary__table">
                                             <tbody>
                                                 <tr>
-                                                    <td>SHIPPING</td>
-                                                    <td>$4.00</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>TAX</td>
-                                                    <td>$0.00</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>SUBTOTAL</td>
-                                                    <td>$379.00</td>
-                                                </tr>
-                                                <tr>
                                                     <td>GRAND TOTAL</td>
-                                                    <td>$379.00</td>
+                                                    <td>{{Cart::subtotal(0,'.',',')}} đ</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -365,48 +239,6 @@
                                                 <!--====== Radio Box ======-->
                                                 <div class="radio-box">
 
-                                                    <input type="radio" id="direct-bank-transfer" name="payment">
-                                                    <div class="radio-box__state radio-box__state--primary">
-
-                                                        <label class="radio-box__label" for="direct-bank-transfer">Direct Bank Transfer</label></div>
-                                                </div>
-                                                <!--====== End - Radio Box ======-->
-
-                                                <span class="gl-text u-s-m-t-6">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</span>
-                                            </div>
-                                            <div class="u-s-m-b-10">
-
-                                                <!--====== Radio Box ======-->
-                                                <div class="radio-box">
-
-                                                    <input type="radio" id="pay-with-check" name="payment">
-                                                    <div class="radio-box__state radio-box__state--primary">
-
-                                                        <label class="radio-box__label" for="pay-with-check">Pay With Check</label></div>
-                                                </div>
-                                                <!--====== End - Radio Box ======-->
-
-                                                <span class="gl-text u-s-m-t-6">Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</span>
-                                            </div>
-                                            <div class="u-s-m-b-10">
-
-                                                <!--====== Radio Box ======-->
-                                                <div class="radio-box">
-
-                                                    <input type="radio" id="pay-with-card" name="payment">
-                                                    <div class="radio-box__state radio-box__state--primary">
-
-                                                        <label class="radio-box__label" for="pay-with-card">Pay With Credit / Debit Card</label></div>
-                                                </div>
-                                                <!--====== End - Radio Box ======-->
-
-                                                <span class="gl-text u-s-m-t-6">International Credit Cards must be eligible for use within the United States.</span>
-                                            </div>
-                                            <div class="u-s-m-b-10">
-
-                                                <!--====== Radio Box ======-->
-                                                <div class="radio-box">
-
                                                     <input type="radio" id="pay-pal" name="payment">
                                                     <div class="radio-box__state radio-box__state--primary">
 
@@ -416,23 +248,10 @@
 
                                                 <span class="gl-text u-s-m-t-6">When you click "Place Order" below we'll take you to Paypal's site to set up your billing information.</span>
                                             </div>
-                                            <div class="u-s-m-b-15">
-
-                                                <!--====== Check Box ======-->
-                                                <div class="check-box">
-
-                                                    <input type="checkbox" id="term-and-condition">
-                                                    <div class="check-box__state check-box__state--primary">
-
-                                                        <label class="check-box__label" for="term-and-condition">I consent to the</label></div>
-                                                </div>
-                                                <!--====== End - Check Box ======-->
-
-                                                <a class="gl-link">Terms of Service.</a>
-                                            </div>
                                             <div>
 
-                                                <button class="btn btn--e-brand-b-2" type="submit">PLACE ORDER</button></div>
+                                                {{-- <button class="btn btn--e-brand-b-2" type="submit">PLACE ORDER</button> --}}
+                                            </div>
                                         </form>
                                     </div>
                                 </div>

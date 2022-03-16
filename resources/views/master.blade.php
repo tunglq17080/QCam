@@ -12,7 +12,8 @@
 
     <!--====== Google Font ======-->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet">
-
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!--====== Vendor Css ======-->
     <link rel="stylesheet" href="css/vendor.css">
 
@@ -326,6 +327,9 @@
 	</noscript>
 
 	<script>
+	$(document).ready(function() {
+		$("div.alert-success-bost").delay(900).slideUp();
+	});
 	$(document).on("click",".submit-cart",function(event) {
 	//$('.submit-cart').click(function(){
 		event.preventDefault();

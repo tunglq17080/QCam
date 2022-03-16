@@ -8,13 +8,13 @@
                         <span class="outer-footer__content-title">Contact Us</span>
                         <div class="outer-footer__text-wrap"><i class="fas fa-home"></i>
 
-                            <span>4247 Ashford Drive Virginia VA-20006 USA</span></div>
+                            <span>18 Hồ Nghinh, Phước Mỹ, Sơn Trà, Đà Nẵng 02363, Vietnam</span></div>
                         <div class="outer-footer__text-wrap"><i class="fas fa-phone-volume"></i>
 
-                            <span>(+0) 900 901 904</span></div>
+                            <span>0333815273</span></div>
                         <div class="outer-footer__text-wrap"><i class="far fa-envelope"></i>
 
-                            <span>contact@domain.com</span></div>
+                            <span>Tunglq17080@gmail.com</span></div>
                         <div class="outer-footer__social">
                             <ul>
                                 <li>
