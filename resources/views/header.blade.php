@@ -114,8 +114,13 @@
     <!--====== End - Nav 1 ======-->
 
     @if(Session::has('flash_message'))
-        <div class="alert alert-success alert-success-bost">
-            {!! Session::get('flash_message') !!}
+        <div class="route-box alert-success-bost" style="background-color: #b1e3bd;">
+            <div class="route-box__g">
+                <a class="route-box__link" href="shop-side-version-2.html"><i class="fas fa-long-arrow-alt-left"></i>
+                    <span style="
+                    font-size: 20px;">{!! Session::get('flash_message') !!}</span>
+                </a>
+            </div>
         </div>
     @endif
     <!--====== Nav 2 ======-->
@@ -1178,9 +1183,9 @@
                                             <div class="mini-product">
                                                 <div class="mini-product__image-wrapper">
 
-                                                    <a class="mini-product__link" href="product-detail.html">
+                                                    <a class="mini-product__link" href="/product-detail/{{$item->id}}">
 
-                                                        <img class="u-img-fluid" src="images/product/{{$item->options->has('cat_slug')?$item->options->cat_slug:''}}/{{$item->options->has('img')?$item->options->img:''}}" alt=""></a></div>
+                                                        <img class="u-img-fluid" src="images/product/{{$item->options->has('img')?$item->options->img:''}}" alt=""></a></div>
                                                 <div class="mini-product__info-wrapper">
 
                                                     <span class="mini-product__category">
@@ -1189,7 +1194,7 @@
 
                                                     <span class="mini-product__name">
 
-                                                        <a href="product-detail.html">{{$item->name}}</a></span>
+                                                        <a href="/product-detail/{{$item->id}}">{{$item->name}}</a></span>
 
                                                     <span class="mini-product__quantity">x {{$item->qty}}</span>
 

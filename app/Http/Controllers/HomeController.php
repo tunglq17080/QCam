@@ -17,14 +17,10 @@ class HomeController extends Controller
     public function index()
     {
         //    
-        // $product = DB::table('products')
-        // ->select('categories.slug as cat_slug', 'products.*')
-        // ->join('categories', 'products.category_id', '=', 'categories.id')
-        // ->where('products.id',2)->first();
-        // dd($product);
-        // Cart::destroy();
         $categories = Category::all();
         $products = Product::all()->take(10);
-        return view('page.index', compact('categories', 'products'));
+        $deal_of_days = Product::all()->take(2);
+        $new_arrivals = Product::all()->take(6);
+        return view('page.index', compact('categories', 'products','new_arrivals','deal_of_days'));
     }
 }

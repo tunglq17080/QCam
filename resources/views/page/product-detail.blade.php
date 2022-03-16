@@ -34,7 +34,7 @@
                             <div id="pd-o-initiate">
                                 <div class="pd-o-img-wrap" data-src="images/product/product-d-1.jpg">
 
-                                    <img class="u-img-fluid" src="images/product/{{$category->slug}}/{{$product->image}}" data-zoom-image="images/product/{{$category->slug}}/{{$product->image}}" alt=""></div>
+                                    <img class="u-img-fluid" src="images/product/{{$product->image}}" data-zoom-image="images/product/{{$category->slug}}/{{$product->image}}" alt=""></div>
                                 <div class="pd-o-img-wrap" data-src="images/product/product-d-2.jpg">
 
                                     <img class="u-img-fluid" src="images/product/product-d-2.jpg" data-zoom-image="images/product/product-d-2.jpg" alt=""></div>
@@ -85,7 +85,7 @@
                         <div>
                             <div class="pd-detail__inline">
 
-                                <span class="pd-detail__price">{{$product->unit_price}} VND</span>
+                                <span class="pd-detail__price">{{number_format($product->unit_price)}} đ</span>
 
                                 <span class="pd-detail__discount">(76% OFF)</span><del class="pd-detail__del">{{$product->unit_price}} VND</del></div>
                         </div>
@@ -160,7 +160,7 @@
                                     </div>
                                     <div class="u-s-m-b-15">
 
-                                        <button class="btn btn--e-brand-b-2" type="submit">Add to Cart</button></div>
+                                        <button class="btn btn--e-brand-b-2 submit-cart" data-modal="modal" data-id="{{$product->id}}" data-modal-id="#add-to-cart" data-tooltip="tooltip" data-placement="top" type="button">Add to Cart</button></div>
                                 </div>
                             </form>
                         </div>
@@ -600,7 +600,7 @@
 
                                     <a class="aspect aspect--bg-grey aspect--square u-d-block" href="product-detail.html">
 
-                                        <img class="aspect__img" src="images/product/{{$category->slug}}/{{$product_relation->image}}" alt=""></a>
+                                        <img class="aspect__img" src="images/product/{{$product_relation->image}}" alt=""></a>
                                     <div class="product-o__action-wrap">
                                         <ul class="product-o__action-list">
                                             <li>

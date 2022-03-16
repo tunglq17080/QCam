@@ -12,8 +12,7 @@
 
     <!--====== Google Font ======-->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet">
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	
     <!--====== Vendor Css ======-->
     <link rel="stylesheet" href="css/vendor.css">
 
@@ -273,7 +272,7 @@
 
 										<a class="s-option__link btn--e-white-brand-shadow" href="/cart">VIEW CART</a>
 
-										<a class="s-option__link btn--e-brand-shadow" href="checkout.html">PROCEED TO CHECKOUT</a></div>
+										<a class="s-option__link btn--e-brand-shadow" href="/checkout">PROCEED TO CHECKOUT</a></div>
 								</div>
 							</div>
 						</div>
@@ -358,9 +357,9 @@
 							<div class="mini-product">
 								<div class="mini-product__image-wrapper">
 
-									<a class="mini-product__link" href="product-detail.html">
+									<a class="mini-product__link" href="/product-detail/`+value.id+`">
 
-										<img class="u-img-fluid" src="images/product/`+value.options.cat_slug+`/`+value.options.img+`" alt=""></a></div>
+										<img class="u-img-fluid" src="images/product/`+value.options.img+`" alt=""></a></div>
 								<div class="mini-product__info-wrapper">
 
 									<span class="mini-product__category">
@@ -369,7 +368,7 @@
 
 									<span class="mini-product__name">
 
-										<a href="product-detail.html">`+ value.name + `</a></span>
+										<a href="/product-detail/`+value.id+`">`+ value.name + `</a></span>
 
 									<span class="mini-product__quantity">`+value.qty+` x</span>
 
@@ -401,6 +400,7 @@
 					// 	"</div>";
 
 					$(".s-option__text > span").text(totalQty);
+					$(".mini-cart-shop-link .total-item-round").text(totalQty);
 		            if(totalQty>0 ) {
 		                strText = totalQty;
 		                $('div#block').css({'display':'block'});
@@ -445,9 +445,9 @@
 							<div class="mini-product">
 								<div class="mini-product__image-wrapper">
 
-									<a class="mini-product__link" href="product-detail.html">
+									<a class="mini-product__link" href="/product-detail/`+value.id+`">
 
-										<img class="u-img-fluid" src="images/product/`+value.options.cat_slug+`/`+value.options.img+`" alt=""></a></div>
+										<img class="u-img-fluid" src="images/product/`+value.options.img+`" alt=""></a></div>
 								<div class="mini-product__info-wrapper">
 
 									<span class="mini-product__category">
@@ -456,7 +456,7 @@
 
 									<span class="mini-product__name">
 
-										<a href="product-detail.html">`+ value.name + `</a></span>
+										<a href="/product-detail/`+value.id+`">`+ value.name + `</a></span>
 
 									<span class="mini-product__quantity">`+value.qty+` x</span>
 
@@ -488,6 +488,7 @@
 					// 	"</div>";
 
 					$(".s-option__text > span").text(totalQty);
+					$(".mini-cart-shop-link .total-item-round").text(totalQty);
 		            if(totalQty>0 ) {
 		                strText = totalQty;
 		                $('div#block').css({'display':'block'});
