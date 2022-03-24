@@ -29,6 +29,9 @@ Route::get('/profile', [UserController::class, 'userProfile']);
 Route::post('/login', [UserController::class, 'login']);
 Route::get('/logout', [UserController::class, 'logout']);
 
+// search
+Route::post('/search', [ProductController::class, 'searchProducts']);
+
 // Product
 Route::get('/product-detail/{id}', [ProductController::class, 'show']);
 
