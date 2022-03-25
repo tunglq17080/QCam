@@ -11,6 +11,8 @@ use Mail;
 use App\Http\Requests\CreateCheckoutRequest;
 use DB;
 use Session;
+use Carbon\Carbon;
+// use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -84,6 +86,7 @@ class OrderController extends Controller
             return redirect('index')->with('flash_message', 'Đặt hàng thành công!');
         }
     }
+    
     /**
      * Generate random string
      *  */ 
@@ -171,6 +174,54 @@ class OrderController extends Controller
     public function index()
     {
         //
+    }
+    public function insertOrder(){
+        $arr =  array("COD","MOMPAY","Bitcoins");
+        for( $i = 0; $i < 20000; $i++ ){
+            $randMonth = rand(3,6);
+            $randPay = rand(0,2);
+            $bill = new Order;
+            $bill->user_id = 2;
+            $bill->name = 'Test Order';
+            $bill->phone = '09050000000';
+            $bill->address = 'RM4C+7PH, Phú Nhuận, Thành phố Hồ Chí Minh, Vietnam';
+            $bill->date_order = date('Y-m-d', strtotime("+".$randMonth." months", strtotime(date("Y-m-d H:i:s"))));
+            $bill->total = rand(10000,99999999999);
+            // $bill->payment = $arr[$randPay];
+            $bill->payment = 'MOMPAY';
+            $bill->note = 'Test Order';
+            $bill->status = 0;
+            $bill->save();
+        }
+    }
+
+    public function analysis(){
+        // $dateS = Carbon::now()->startOfMonth()->subMonth(6);
+        // $dateE = Carbon::now()->startOfMonth(); 
+        // dd(date("m") + 3);
+        $arrRes = [];
+        for($i = 1; $i < 10; $i++){
+            $cod = DB::table('orders')
+            ->whereMonth('date_order', date('m') + $i)
+            ->where('payment', 'COD')
+            ->sum('total');
+            $momo = DB::table('orders')
+            ->whereMonth('date_order', date('m') + $i)
+            ->where('payment', 'MOMPAY')
+            ->sum('total');
+            $bitcoins = DB::table('orders')
+            ->whereMonth('date_order', date('m') + $i)
+            ->where('payment', 'Bitcoins')
+            ->sum('total');
+            $arr = array(
+                "period" => date('Y-m-d', strtotime("+".$i." months", strtotime(date("Y-m-d H:i:s")))),
+                "cod" => $cod,
+                "momo" => $momo,
+                "bitcoins" => $bitcoins
+            );
+            array_push($arrRes, $arr);
+        }
+        return response()->json($arrRes);
     }
 
     /**

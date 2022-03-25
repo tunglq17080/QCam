@@ -26,6 +26,9 @@ Route::get('/', [HomeController::class, 'index']);
 Route::get('/login', function () {
     return view('page.login');
 });
+Route::get('/register', function () {
+    return view('page.register');
+});
 Route::get('/about', function () {
     return view('page.about');
 });
@@ -34,6 +37,7 @@ Route::get('/contact', function () {
 });
 Route::get('/profile', [UserController::class, 'userProfile']);
 Route::post('/login', [UserController::class, 'login']);
+Route::post('/register', [UserController::class, 'signup']);
 Route::get('/logout', [UserController::class, 'logout']);
 
 // search
@@ -53,6 +57,7 @@ Route::get('/cart/delete/{id}', [CartController::class, 'deleteItemCart']);
 Route::post('/cart/add/{id}/qty', [CartController::class, 'addItemCartQty']);
 // Checkout
 Route::get('/checkout', [OrderController::class, 'checkout']);
+Route::get('/insert', [OrderController::class, 'insertOrder']);
 Route::post('/confirmCheckout', [OrderController::class, 'confirmCheckout']);
 // Admin page
 Route::group(['prefix' => 'admin','middleware'=>'isAdmin'], function () {

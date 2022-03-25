@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Auth;
@@ -138,12 +138,18 @@ class UserController extends Controller
         return redirect('user/changePassword/'.$id)->with('flash_message','Đổi mật khẩu thành công');
     }
 
-    public function signup(CreateUserSignUpRequest $request)
+    public function signup(Request $request)
     {
         $data = $request->all();
+        // dd($data);
         $data['password'] = Hash::make($data['password']);
         $user = User::create($data);
-        return redirect('index')->with('flash_message','Đã đăng ký thành công, xin mời đăng nhập !');
+        Auth::login($user);
+        return redirect('/')->with('flash_message','Đăng ký thành công');
+        // if(Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
+        //     return redirect('/')->with('flash_message','Đăng ký thành công');
+        // }
+        // return redirect('index')->with('flash_message','Đã đăng ký thành công, xin mời đăng nhập !');
     }
     
     public function forgetPassword()

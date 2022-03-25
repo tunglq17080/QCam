@@ -63,7 +63,7 @@
                                 <ul style="width:120px">
                                     <li>
 
-                                        <a href="signup.html"><i class="fas fa-user-plus u-s-m-r-6"></i>
+                                        <a href="/register"><i class="fas fa-user-plus u-s-m-r-6"></i>
 
                                             <span>Signup</span></a></li>
                                     <li>
