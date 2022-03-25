@@ -8,7 +8,7 @@
                         <span class="outer-footer__content-title">Contact Us</span>
                         <div class="outer-footer__text-wrap"><i class="fas fa-home"></i>
 
-                            <span>18 Hồ Nghinh, Phước Mỹ, Sơn Trà, Đà Nẵng 02363, Vietnam</span></div>
+                            <span>18 Hồ Nghinh, Phước Mỹ, Sơn Trà, Đà Nẵng, Vietnam</span></div>
                         <div class="outer-footer__text-wrap"><i class="fas fa-phone-volume"></i>
 
                             <span>0333815273</span></div>
@@ -46,19 +46,11 @@
                                     <ul>
                                         <li>
 
-                                            <a href="cart.html">Cart</a></li>
+                                            <a href="/cart">Cart</a></li>
                                         <li>
 
-                                            <a href="dashboard.html">Account</a></li>
+                                            <a href="{{ Auth::user() ? url('login') : ''}}">Account</a></li>
                                         <li>
-
-                                            <a href="shop-side-version-2.html">Manufacturer</a></li>
-                                        <li>
-
-                                            <a href="dash-payment-option.html">Finance</a></li>
-                                        <li>
-
-                                            <a href="shop-side-version-2.html">Shop</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -71,19 +63,10 @@
                                     <ul>
                                         <li>
 
-                                            <a href="about.html">About us</a></li>
+                                            <a href="/about">About us</a></li>
                                         <li>
 
-                                            <a href="contact.html">Contact Us</a></li>
-                                        <li>
-
-                                            <a href="index.html">Sitemap</a></li>
-                                        <li>
-
-                                            <a href="dash-my-order.html">Delivery</a></li>
-                                        <li>
-
-                                            <a href="shop-side-version-2.html">Store</a></li>
+                                            <a href="/contact">Contact Us</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -133,7 +116,7 @@
                     <div class="lower-footer__content">
                         <div class="lower-footer__copyright">
 
-                            <span>Copyright © 2018</span>
+                            <span>Copyright © 2022</span>
 
                             <a href="index.html">Reshop</a>
 

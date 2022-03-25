@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
@@ -25,13 +26,22 @@ Route::get('/', [HomeController::class, 'index']);
 Route::get('/login', function () {
     return view('page.login');
 });
+Route::get('/about', function () {
+    return view('page.about');
+});
+Route::get('/contact', function () {
+    return view('page.contact');
+});
 Route::get('/profile', [UserController::class, 'userProfile']);
 Route::post('/login', [UserController::class, 'login']);
 Route::get('/logout', [UserController::class, 'logout']);
 
 // search
-Route::post('/search', [ProductController::class, 'searchProducts']);
-
+Route::get('/search', [ProductController::class, 'searchProducts']);
+// Category
+Route::get('/category/{id}', [CategoryController::class, 'get']);
+// Shop
+Route::get('/shop', [ProductController::class, 'getAll']);
 // Product
 Route::get('/product-detail/{id}', [ProductController::class, 'show']);
 
