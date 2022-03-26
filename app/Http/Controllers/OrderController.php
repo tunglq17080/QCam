@@ -39,7 +39,12 @@ class OrderController extends Controller
 
     public function confirmCheckout(Request $request)      
     {
-
+        // dd($request->payment);
+        // dd($this->momoPay(Cart::subtotal(0,'.','')));
+        if( $request->payment == "momopay" ){
+            return redirect($this->momoPay(Cart::subtotal(0,'.','')));
+        }
+        Session::put('momo',$request);
         $price = Cart::subtotal(0,'.','');
         $cart=Cart::Content();
         // dd($cart);
@@ -80,11 +85,44 @@ class OrderController extends Controller
         return redirect('/')->with('flash_message', 'Đặt hàng thành công!');    
     }
 
-    public function confirmVnPay(Request $request)   {
-        if ( $request->vnp_TxnRef == session('vnp_code') ){
-            Bill::where('id',session('bill_id'))->update(['status'=>1]);
-            return redirect('index')->with('flash_message', 'Đặt hàng thành công!');
+    public function momoPayCallBack(Request $request)   {
+        $price = Cart::subtotal(0,'.','');
+        $cart=Cart::Content();
+        $bill = new Order;
+        $bill->user_id = Auth::id();
+        $bill->name = '';
+        $bill->phone = '';
+        $bill->address = '';
+        $bill->date_order = date('Y-m-d H:i:s');
+        $bill->total = Cart::subtotal(0,'.','');
+        $bill->payment = 'Momopay';
+        $bill->note = '';
+        $bill->status = 0;
+        $bill->save();
+        foreach($cart as $item)
+        {
+            $billDetail = new OrderProduct;
+            $billDetail->order_id = $bill->id;
+            $billDetail->product_id = $item->id;
+            $billDetail->quantity = $item->qty;
+            $billDetail->unit_price = $item->price;
+            $billDetail->save();
         }
+        Cart::destroy();
+        $data = ['bill' => $bill];
+        // Mail::send('page.mails.blank',$data,function($msg) {
+        //     $msg->from('thanhungdn92@gmail.com', 'Sweet Bakery Store');
+        //     $msg->to(Auth::user()->email, Auth::user()->name)->subject('Thông tin đặt hàng của bạn');
+        // });
+        if( $request->payment_method == "ATM" ){
+            // return dd($price);
+            $vnp_code = $this->generateRandomString();
+            Session::put('vnp_code', $vnp_code);
+            Session::put('bill_id', $bill->id);
+            $url = $this->vnPay($vnp_code,$price);
+            return redirect($url);
+        }
+        return redirect('/')->with('flash_message', 'Đặt hàng thành công!');   
     }
     
     /**
@@ -103,67 +141,65 @@ class OrderController extends Controller
      * Input: vnp_code, price
      * Output: url to payment vnpay sanbox page
      *  */ 
-    public function vnPay($vnp_code, $price)
+    public function momoPay($price)
     {
-        // Set param vnpay
-        $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        // $vnp_Returnurl = "https://45cm.com/";
-        $vnp_Returnurl = url('') . "/confirmVnPay";
-        $vnp_TmnCode = "ZZZ697SV";//Mã website tại VNPAY 
-        $vnp_HashSecret = "XEPVQWDSFUFLALRKEQBRLELNPNNYKZFQ"; //Chuỗi bí mật
+        $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
+        $partnerCode = 'MOMOEG5R20220326';
+        $accessKey = 'PpMNnQhMxVeCMXKg';
+        $secretKey = 'nU6c0vOhR3MM6f9Cq6m381Bdu1ivxdgd';
+        $orderInfo = "sadhasdhaskjdhasd";
+        $amount = $price;
+        $orderId = time();
 
-        $vnp_TxnRef = $vnp_code; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
-        $vnp_OrderInfo = "Thanh toan san pham. So tien ".$price." VND";
-        $vnp_OrderType = "other";
-        // $vnp_Amount = $_POST['amount'] * 100;
-        $vnp_Amount = $price * 100;
-        $vnp_Locale = "vn";
-        // $vnp_BankCode = "VNPAYQR";
-        $vnp_BankCode = "NCB";
-        $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
+        $redirectUrl = url('') . "/momoPayCallBack";
+        $ipnUrl = url('') . "/momoPayCallBack";
+        // $redirectUrl = url('') . "/api/v1/auth/momoPayCallBack/";
+        // $ipnUrl = url('') . "/api/v1/auth/momoPayCallBack/";
+        $extraData = "";
 
-        $inputData = array(
-            "vnp_Version" => "2.1.0",
-            "vnp_TmnCode" => $vnp_TmnCode,
-            "vnp_Amount" => $vnp_Amount,
-            "vnp_Command" => "pay",
-            "vnp_CreateDate" => date('YmdHis'),
-            "vnp_CurrCode" => "VND",
-            "vnp_IpAddr" => $vnp_IpAddr,
-            "vnp_Locale" => $vnp_Locale,
-            "vnp_OrderInfo" => $vnp_OrderInfo,
-            "vnp_OrderType" => $vnp_OrderType,
-            "vnp_ReturnUrl" => $vnp_Returnurl,
-            "vnp_TxnRef" => $vnp_TxnRef
+        $serectkey = $secretKey;
+
+        $requestId = time() . "";
+        $requestType = "captureWallet";
+        // $extraData = ($_POST["extraData"] ? $_POST["extraData"] : "");
+        //before sign HMAC SHA256 signature
+        $rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&ipnUrl=" . $ipnUrl . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl=" . $redirectUrl . "&requestId=" . $requestId . "&requestType=" . $requestType;
+        $signature = hash_hmac("sha256", $rawHash, $serectkey);
+        $data = array('partnerCode' => $partnerCode,
+            'partnerName' => "Test",
+            "storeId" => "MomoTestStore",
+            'requestId' => $requestId,
+            'amount' => $amount,
+            'orderId' => $orderId,
+            'orderInfo' => $orderInfo,
+            'redirectUrl' => $redirectUrl,
+            'ipnUrl' => $ipnUrl,
+            'lang' => 'vi',
+            'extraData' => $extraData,
+            'requestType' => $requestType,
+            'signature' => $signature);
+        $data = json_encode($data);
+        // send request to momo server
+        $ch = curl_init($endpoint);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($data))
         );
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
 
-        if (isset($vnp_BankCode) && $vnp_BankCode != "") {
-            $inputData['vnp_BankCode'] = $vnp_BankCode;
-        }
-        // sort array data
-        ksort($inputData);
-        // define var
-        $query = "";
-        $i = 0;
-        $hashdata = "";
-        // merge array data to string
-        foreach ($inputData as $key => $value) {
-            if ($i == 1) {
-                $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
-            } else {
-                $hashdata .= urlencode($key) . "=" . urlencode($value);
-                $i = 1;
-            }
-            $query .= urlencode($key) . "=" . urlencode($value) . '&';
-        }
+        //execute post
+        $result = curl_exec($ch);
+        //close connection
+        curl_close($ch);
 
-        $vnp_Url = $vnp_Url . "?" . $query;
-        // add hash
-        if (isset($vnp_HashSecret)) {
-            $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret);//  
-            $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
-        }
-        return $vnp_Url;
+        $jsonResult = json_decode($result, true);  // decode json
+
+        //Just a example, please check more in there
+        return $jsonResult['payUrl'];
     }
     public function deleteBill($id){
         $bill = Bill::findOrFail($id);

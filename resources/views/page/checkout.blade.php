@@ -170,7 +170,7 @@
 
                                         <button class="btn btn--e-transparent-brand-b-2" type="submit">PLACE ORDER</button></div>
                                 </div>
-                            </form>
+                            
                         </div>
                         <div class="col-lg-6">
                             <h1 class="checkout-f__h1">ORDER SUMMARY</h1>
@@ -239,14 +239,12 @@
                                                 <!--====== Radio Box ======-->
                                                 <div class="radio-box">
 
-                                                    <input type="radio" id="pay-pal" name="payment">
+                                                    <input type="radio" id="pay-pal" name="payment" value="momopay">
                                                     <div class="radio-box__state radio-box__state--primary">
 
-                                                        <label class="radio-box__label" for="pay-pal">Pay Pal</label></div>
+                                                        <label class="radio-box__label" for="pay-pal">MOMO Pay</label></div>
                                                 </div>
                                                 <!--====== End - Radio Box ======-->
-
-                                                <span class="gl-text u-s-m-t-6">When you click "Place Order" below we'll take you to Paypal's site to set up your billing information.</span>
                                             </div>
                                             <div>
 
@@ -257,6 +255,7 @@
                                 </div>
                             </div>
                             <!--====== End - Order Summary ======-->
+                        </form>
                         </div>
                     </div>
                 </div>
