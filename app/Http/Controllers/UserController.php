@@ -30,8 +30,9 @@ class UserController extends Controller
    
     {
         if(Auth::user()) {
-            $orders = Order::where('user_id',Auth::id())->get();
-           return view('page.profile',compact('orders')); 
+            $orders = Order::where('user_id',Auth::id())->paginate(5);
+            $total = Order::where('user_id',Auth::id())->count();
+           return view('page.profile',compact('orders','total')); 
         }
         else {
             return redirect('index');

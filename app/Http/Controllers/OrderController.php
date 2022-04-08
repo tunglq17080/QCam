@@ -6,6 +6,7 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\OrderProduct;
+use App\Models\Product;
 use Cart;
 use Mail;
 use App\Http\Requests\CreateCheckoutRequest;
@@ -321,8 +322,12 @@ class OrderController extends Controller
      * @param  \App\bill  $bill
      * @return \Illuminate\Http\Response
      */
-    public function destroy(bill $bill)
+    public function orderDetail(Request $request)
     {
         //
+        $order = OrderProduct::where('order_id',$request->orderId)->first();
+        $product = Product::where('id',$order->product_id)->first();
+        $total = Order::where('user_id',Auth::id())->count();
+        return view('page.dash_manage_order',compact('order','total','product')); 
     }
 }

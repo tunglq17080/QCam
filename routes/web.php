@@ -60,6 +60,8 @@ Route::get('/checkout', [OrderController::class, 'checkout']);
 Route::get('/insert', [OrderController::class, 'insertOrder']);
 Route::post('/confirmCheckout', [OrderController::class, 'confirmCheckout']);
 Route::get('/momoPayCallBack', [OrderController::class, 'momoPayCallBack']);
+// order
+Route::get('/order-detail', [OrderController::class, 'orderDetail']);
 // Admin page
 Route::group(['prefix' => 'admin','middleware'=>'isAdmin'], function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);

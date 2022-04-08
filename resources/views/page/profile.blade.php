@@ -74,7 +74,7 @@
 
                                                 <span class="dash__w-icon dash__w-icon-style-1"><i class="fas fa-cart-arrow-down"></i></span>
 
-                                                <span class="dash__w-text">{{isset($orders) ? count($orders) : 0 }}</span>
+                                                <span class="dash__w-text">{{isset($total) ? $total : 0 }}</span>
 
                                                 <span class="dash__w-name">Orders Placed</span></div>
                                         </li>
@@ -185,7 +185,7 @@
                                                         <span>{{number_format($order->total)}} đ</span>
                                                         <div class="dash__link dash__link--brand">
 
-                                                            <a href="dash-manage-order.html">MANAGE</a></div>
+                                                            <a href="/order-detail?orderId={{$order->id}}">MANAGE</a></div>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -193,6 +193,11 @@
                                         </tbody>
                                     </table>
                                 </div>
+                            </div>
+                            <div style="margin-top: 40px">
+                                <!--====== Pagination ======-->
+                                {{ $orders->links('pagination.default') }}
+                                <!--====== End - Pagination ======-->
                             </div>
                         </div>
                     </div>
