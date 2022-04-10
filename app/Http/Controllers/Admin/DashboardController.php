@@ -29,9 +29,20 @@ class DashboardController extends Controller
     public function getOrders()
     {
         //
-        $orders = Order::all();
-        return view('admin.page.admin_order',compact('orders'));
+        // $orders = Order::paginate(8);
+        return view('admin.page.admin_order');
     }
+    // /**
+    //  * Display a listing of the resource.
+    //  *
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function getOrders()
+    // {
+    //     //
+    //     $orders = Order::paginate(8);
+    //     return view('admin.page.admin_order',compact('orders'));
+    // }
 
     /**
      * Show the form for creating a new resource.

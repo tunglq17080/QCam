@@ -45,3 +45,6 @@
     </div>
 </div>
 @endsection()
+@push('scripts')
+    <script src="js/dashboard1.js"></script>
+@endpush

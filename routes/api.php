@@ -20,4 +20,5 @@ use App\Http\Controllers\OrderController;
 // });
 Route::group(['prefix' => 'v1'], function () {
     Route::get('/analysis', [OrderController::class, 'analysis']);
+    Route::get('/getData', [OrderController::class, 'getData'])->name('order.data');
 });

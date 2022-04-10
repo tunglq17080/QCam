@@ -29,6 +29,9 @@
     <link href="/admin/css/pages/dashboard1.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
     <link href="/admin/css/colors/default.css" id="theme" rel="stylesheet">
+    
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+  
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -114,8 +117,11 @@
     <!--c3 JavaScript -->
     <script src="/admin/assets/node_modules/d3/d3.min.js"></script>
     <script src="/admin/assets/node_modules/c3-master/c3.min.js"></script>
+    <!--dataTables-->
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <!--dataTables-->
     <!-- Chart JS -->
-    <script src="js/dashboard1.js"></script>
+    @stack('scripts')
 </body>
 
 </html>

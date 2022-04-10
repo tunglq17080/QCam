@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\BotManController;
 // Admin page
 use App\Http\Controllers\Admin\DashboardController;
 
@@ -67,3 +68,6 @@ Route::group(['prefix' => 'admin','middleware'=>'isAdmin'], function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::get('/getOrders', [DashboardController::class, 'getOrders']);
 });
+
+// chatbot
+Route::match(['get', 'post'], '/botman', [BotManController::class, 'handle']);

@@ -29,7 +29,7 @@
                     <h4 class="card-title">Order Table</h4>
                     <h6 class="card-subtitle">Add class <code>.table</code></h6>
                     <div class="table-responsive">
-                        <table class="table">
+                        <table id="data_table" class="table">
                             <thead>
 
                                 <tr>
@@ -40,10 +40,11 @@
                                     <th>address</th>
                                     <th>total</th>
                                     <th>created_at</th>
+                                    <th>action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($orders as $order)
+                                {{-- @foreach ($orders as $order)
                                 <tr>
                                     <td>{{$order->id}}</td>
                                     <td>{{$order->user_id}}</td>
@@ -53,7 +54,7 @@
                                     <td>{{$order->total}}</td>
                                     <td>{{$order->created_at}}</td>
                                 </tr>
-                                @endforeach
+                                @endforeach --}}
 
                             </tbody>
                         </table>
@@ -67,3 +68,25 @@
     <!-- ============================================================== -->
 </div>
 @endsection()
+
+@push('scripts')
+    <script>
+        $(document).ready( function () {
+            $('#data_table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route('order.data') }}',
+                columns: [
+                    { data: 'id', name: 'id' },
+                    { data: 'user_id', name: 'user_id' },
+                    { data: 'name', name: 'name' },
+                    { data: 'phone', name: 'phone' },
+                    { data: 'address', name: 'address' },
+                    { data: 'total', name: 'total' },
+                    { data: 'created_at', name: 'created_at' },
+                    {data: 'action', name: 'action', orderable: false, searchable: false},
+                ]
+            });
+        } );
+    </script>
+@endpush

@@ -14,6 +14,7 @@ use DB;
 use Session;
 use Carbon\Carbon;
 // use Illuminate\Support\Facades\DB;
+use Yajra\Datatables\Datatables;
 
 class OrderController extends Controller
 {
@@ -45,7 +46,6 @@ class OrderController extends Controller
         if( $request->payment == "momopay" ){
             return redirect($this->momoPay(Cart::subtotal(0,'.','')));
         }
-        Session::put('momo',$request);
         $price = Cart::subtotal(0,'.','');
         $cart=Cart::Content();
         // dd($cart);
@@ -329,5 +329,22 @@ class OrderController extends Controller
         $product = Product::where('id',$order->product_id)->first();
         $total = Order::where('user_id',Auth::id())->count();
         return view('page.dash_manage_order',compact('order','total','product')); 
+    }
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\bill  $bill
+     * @return \Illuminate\Http\Response
+     */
+    public function getData(Request $request)
+    {
+        //
+        $order = Order::all();
+        return DataTables::of($order)
+        ->addColumn('action', function($order){
+            return '<a onclick="editForm('. $order->id .')" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i>Edit</a>'.
+                '<a onclick="deleteData('. $order->id .')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i>Delete</a>'.
+                '<a href="bill/details/'.$order->id.'" class="btn btn-danger btn-xs">Details</a>';
+        })->make(true);
     }
 }
