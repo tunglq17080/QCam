@@ -242,7 +242,7 @@
                                                     <input type="radio" id="pay-pal" name="payment" value="momopay">
                                                     <div class="radio-box__state radio-box__state--primary">
 
-                                                        <label class="radio-box__label" for="pay-pal">MOMO Pay</label></div>
+                                                        <label class="radio-box__label" for="pay-pal">VN Pay</label></div>
                                                 </div>
                                                 <!--====== End - Radio Box ======-->
                                             </div>
