@@ -210,7 +210,8 @@ class OrderController extends Controller
         $vnp_HashSecret = "XEPVQWDSFUFLALRKEQBRLELNPNNYKZFQ"; //Chuỗi bí mật
 
         // $vnp_TxnRef = $storeId; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
-        $vnp_TxnRef = "XEPVQWDSFUFLALRKEQBRLELNPNNYKZFQ"; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+        $vnp_TxnRef = time(); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+        // $vnp_TxnRef = "XEPVQWDSFUFLALRKEQBRLELNPNNYKZFQ"; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
         $vnp_OrderInfo = "Thanh toán đơn hàng";
         $vnp_OrderType = "other";
         // $vnp_Amount = $_POST['amount'] * 100;
