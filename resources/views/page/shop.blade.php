@@ -108,7 +108,7 @@
                                                 <a class="fas fa-search" data-modal="modal" data-modal-id="#quick-look" data-tooltip="tooltip" data-placement="top" title="Quick Look"></a></div>
                                             <div class="product-m__add-cart">
 
-                                                <a class="btn--e-brand" data-modal="modal" data-modal-id="#add-to-cart">Add to Cart</a></div>
+                                                <a class="btn--e-brand submit-button-shop"" data-modal="modal" data-id="{{$product->id}}" data-modal-id="#add-to-cart">Add to Cart</a></div>
                                         </div>
                                         <div class="product-m__content">
                                             <div class="product-m__category">

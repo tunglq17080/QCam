@@ -90,9 +90,14 @@
                                         <label class="gl-label" for="reg-password">PASSWORD *</label>
 
                                         <input class="input-text input-text--primary-style" name="password" type="text" id="reg-password" placeholder="Enter Password"></div>
+                                    <div class="u-s-m-b-30">
+
+                                        <label class="gl-label" for="reg-password">CONFIRM PASSWORD *</label>
+
+                                        <input class="input-text input-text--primary-style" name="confirm_password" type="text" id="reg-password-confirm" placeholder="Enter Confirm Password"></div>
                                     <div class="u-s-m-b-15">
 
-                                        <button class="btn btn--e-transparent-brand-b-2" type="submit">CREATE</button></div>
+                                        <button class="btn btn--e-transparent-brand-b-2 button-validate" type="submit">CREATE</button></div>
 
                                     <a class="gl-link" href="#">Return to Store</a>
                                 </form>
@@ -106,4 +111,28 @@
     </div>
     <!--====== End - Section 2 ======-->
 </div>
+
+@push('scripts')
+<script>
+    $( document ).ready(function() {
+        // $("form.l-f-o__form").submit(function(e){
+        //     e.preventDefault();
+        //     // check format password
+        //     let passwd = $("#reg-password").val();
+        //     let checkPass = passwd.match(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{8,})$/);
+        //     console.log(checkPss);
+        //     // return false;
+        // });
+        // $(document).on("submit", "form", function(e){
+        //     e.preventDefault();
+        //     alert('it works!');
+        //     return  false;
+        // });
+    });
+    // $(document).on("click",".button-validate",function(event){
+		
+	// });
+</script>
+@endpush
+
 @endsection()

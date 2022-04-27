@@ -12,7 +12,7 @@
 
     <!--====== Google Font ======-->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet">
-	
+	<link rel="stylesheet" href="sweetalert2.min.css">
     <!--====== Vendor Css ======-->
     <link rel="stylesheet" href="css/vendor.css">
 
@@ -308,6 +308,7 @@
 	<!--====== App ======-->
 	<script src="js/app.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/1.4.5/numeral.min.js"></script>
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<!--====== Noscript ======-->
 	<noscript>
 		<div class="app-setting">
@@ -329,7 +330,7 @@
 	$(document).ready(function() {
 		$("div.alert-success-bost").delay(900).slideUp();
 	});
-	$(document).on("click",".submit-cart",function(event) {
+	$(document).on("click",".submit-cart, .submit-button-shop",function(event) {
 	//$('.submit-cart').click(function(){
 		event.preventDefault();
 		// var productId = $(this).parent().find("input[name='ProductId']").val();
@@ -421,10 +422,7 @@
 		});
 	});
 
-	$(document).on("click",".deleteCart",function(event){
-		// var rowId = $(this).parent().parent().find('#rowId').val();
-		var rowId = $(this).data('id');
-		event.preventDefault();
+	function deleteCart(rowId){
 		$.ajax ({
         	type: 'get',
         	dataType: 'html',
@@ -465,27 +463,9 @@
 
 							<a class="mini-product__delete-link far fa-trash-alt deleteCart" data-id="`+value.rowId+`"></a>
 						</div>`;
-					   	// result += "<div class='cart-item'>" +
-		                // 		"<div class='media'>" + 
-		                // 		"<a class='pull-left' href='#''><img src='source/image/product/"+value.options.img+"' alt='' ></a>"+			             
-		                // 		"<div class='media-body'>"+
-		                //     	"<input type='hidden' value='"+value.rowId+"' id='rowId'>"+
-		                //     	"<a ><button type='button' class='remove-cart-item deleteCart'>×</button></a>"+
-		                //     	"<span class='cart-item-title'>"+ value.name + "</span>"+
-		                // 		"<span class='cart-item-amount'>"+value.qty+"*<span>"+numeral(value.price).format('0,0')+"</span></span>"+
-	                	// 		"</div>"+
-	                	// 	"</div>"+
-	                	// 	"</div>";
-					});
-					// result+= "<div class='cart-caption' id='updateCart' >"+
-					// 		"<div class='cart-total text-right'>Tổng tiền: <span class='cart-total-value'>"+numeral(total).format('0,0')+"</span></div>"+
-					// 		"<div class='clearfix'></div>"+
 
-					// 		"<div class='center'>"+
-					// 			"<div class='space10'>&nbsp;</div>"+
-					// 			"<a href='{{url('cart')}}' class='beta-btn primary text-center'>Đặt hàng <i class='fa fa-chevron-right'></i></a>"+
-					// 		"</div>"+
-					// 	"</div>";
+					});
+
 
 					$(".s-option__text > span").text(totalQty);
 					$(".mini-cart-shop-link .total-item-round").text(totalQty);
@@ -498,18 +478,34 @@
 		            }
 					$(".mini-product-container .card-mini-product").remove();
 					$(".mini-product-container").html(result);
-		            // cart+= "<i class='fa fa-shopping-cart'></i> Giỏ hàng "+
-					// 		"( "+ strText +" )" +
-					// 		"<i class='fa fa-chevron-down'></i>"
-	        		// console.log(cart);
+
 					$(".mini-product-stat .subtotal-value").text(numeral(total).format('0,0'));
-	        		// $('.beta-select').html(cart);
-             		// $('#add-cart-item').html(result);
+					Swal.fire(
+					'Good job!',
+					'Delete success!',
+					'success'
+					)
 	            },
 	            error: function (request, status, error) {
 				        // alert(request.responseText);
 				}
 		});
+	}
+
+	$(document).on("click",".deleteCart",function(event){
+		// var rowId = $(this).parent().parent().find('#rowId').val();
+		var rowId = $(this).data('id');
+		// event.preventDefault();
+		Swal.fire({
+			title: 'Do you want to delete products?',
+			showCancelButton: true,
+			confirmButtonText: 'Delete',
+			}).then((result) => {
+			/* Read more about isConfirmed, isDenied below */
+			if (result.isConfirmed) {
+				deleteCart(rowId);
+			}
+		})
 	});
 	</script>
 	{{-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/assets/css/chat.min.css"> --}}
@@ -525,5 +521,6 @@
     </script>
   
     <script src='https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/js/widget.js'></script>
+	@stack('scripts')
 </body>
 </html>

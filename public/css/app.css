@@ -5688,7 +5688,7 @@ input::-ms-clear {
   line-height: 34px;
   text-align: center;
   cursor: pointer;
-  color: #ffffff; }
+  color: #ffffff; opacity: 0;}
 
 .mega-menu-list > ul > li > a {
   display: block;
