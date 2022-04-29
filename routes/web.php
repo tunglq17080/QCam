@@ -10,6 +10,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\BotManController;
 // Admin page
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ProductController as AdminProduct;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,9 +65,21 @@ Route::get('/momoPayCallBack', [OrderController::class, 'momoPayCallBack']);
 // order
 Route::get('/order-detail', [OrderController::class, 'orderDetail']);
 // Admin page
-Route::group(['prefix' => 'admin','middleware'=>'isAdmin'], function () {
-    Route::get('/dashboard', [DashboardController::class, 'index']);
-    Route::get('/getOrders', [DashboardController::class, 'getOrders']);
+Route::group(['prefix' => 'cp', 'middleware'=>'isAdmin'], function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/getOrders', [DashboardController::class, 'getOrders'])->name('admin.order');
+
+    Route::group(['prefix' => 'products'], function () {
+        Route::get('/', [AdminProduct::class, 'index'])->name('admin.product');
+        Route::get('/list', [AdminProduct::class, 'search'])->name('admin.product.list');
+        Route::get('/create', [AdminProduct::class, 'create'])->name('admin.product.create');
+        Route::get('/edit/{id}', [AdminProduct::class, 'edit'])->name('admin.product.edit')->where('id', '[0-9]+');
+        Route::post('/store', [AdminProduct::class, 'store'])->name('admin.product.store');
+
+        Route::get('/delete/{id}', [AdminProduct::class, 'delete'])->name('admin.product.delete')->where('id', '[0-9]+');
+
+    });
+
 });
 
 // chatbot
