@@ -35,12 +35,9 @@ class CartController extends Controller
 
     public function listCart()
     {
-        if(Cart::count() > 0) {
-            $content = Cart::Content();
-            $total = Cart::subtotal();
-            return view('page.shopping-cart', compact('content', 'total'));
-        }
-        return redirect('index')->with('flash_message', 'Giỏ hàng còn trống');  
+        $content = Cart::Content();
+        $total = Cart::subtotal();
+        return view('page.shopping-cart', compact('content', 'total'));
     }
         
     public function deleteItemCart($id)

@@ -98,7 +98,7 @@
         <button type="submit" class="btn btn-success">
             <i class="fa fa-check"></i> Save
         </button>
-        <a href="{{ route('admin.product.list') }}" class="btn btn-dark">
+        <a href="{{ route('admin.product') }}" class="btn btn-dark">
             Cancel
         </a>
     </div>

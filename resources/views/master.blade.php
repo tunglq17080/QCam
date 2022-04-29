@@ -504,6 +504,7 @@
 			/* Read more about isConfirmed, isDenied below */
 			if (result.isConfirmed) {
 				deleteCart(rowId);
+				location.reload();
 			}
 		})
 	});

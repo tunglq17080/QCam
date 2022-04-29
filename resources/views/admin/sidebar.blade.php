@@ -11,6 +11,11 @@
                             class="fa fa-user-circle-o"></i><span class="hide-menu">Profile</span></a>
                 </li>
                 <li>
+                    <a class="waves-effect waves-dark" href="{{ route('admin.category') }}" aria-expanded="false">
+                        <i class="fa fa-list" aria-hidden="true"></i><span class="hide-menu">Categories</span>
+                    </a>
+                </li>
+                <li>
                     <a class="waves-effect waves-dark" href="{{ route('admin.product') }}" aria-expanded="false">
                         <i class="fa fa-shopping-cart"></i><span class="hide-menu">Products</span>
                     </a>
