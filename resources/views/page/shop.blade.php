@@ -102,7 +102,7 @@
 
                                             <a class="aspect aspect--bg-grey aspect--square u-d-block" href="product-detail.html">
 
-                                                <img class="aspect__img" src="images/product/{{$product->image}}" alt=""></a>
+                                                <img class="aspect__img" src="{{$product->image_url}}" alt=""></a>
                                             <div class="product-m__quick-look">
 
                                                 <a class="fas fa-search" data-modal="modal" data-modal-id="#quick-look" data-tooltip="tooltip" data-placement="top" title="Quick Look"></a></div>
