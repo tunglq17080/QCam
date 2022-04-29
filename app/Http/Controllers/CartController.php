@@ -24,10 +24,11 @@ class CartController extends Controller
         ->where('products.id',$id)->first();
 
         if($product->promotion_price == 0) {
-            Cart::add(array('id' => $id, 'name' => $product->name, 'qty' => 1, 'price' => $product->unit_price, 'options' =>array('img' => $product->image, 'cat_slug' => $product->cat_slug)));
+            Cart::add(array('id' => $id, 'name' => $product->name, 'qty' => 1, 'price' => $product->unit_price, 'options' =>array('img' =>
+                                                                                                                                      $product->image_url, 'cat_slug' => $product->cat_slug)));
         }
         else {
-            Cart::add(array('id' => $id, 'name' => $product->name, 'qty' => 1, 'price' => $product->promotion_price, 'options' =>array('img' => $product->image, 'cat_slug' => $product->cat_slug)));
+            Cart::add(array('id' => $id, 'name' => $product->name, 'qty' => 1, 'price' => $product->promotion_price, 'options' =>array('img' => $product->image_url, 'cat_slug' => $product->cat_slug)));
         }
         $content = Cart::Content();
         return $content;   
@@ -67,10 +68,10 @@ class CartController extends Controller
         $product = Product::findOrFail($id);
         $qty = $request->qty;
         if($product->promotion_price == 0) {
-            Cart::add(array('id' => $id, 'name' => $product->name, 'qty' => $qty, 'price' => $product->unit_price, 'options' =>array('img' => $product->image)));
+            Cart::add(array('id' => $id, 'name' => $product->name, 'qty' => $qty, 'price' => $product->unit_price, 'options' =>array('img' => $product->image_url)));
         }
         else {
-            Cart::add(array('id' => $id, 'name' => $product->name, 'qty' => $qty, 'price' => $product->promotion_price, 'options' =>array('img' => $product->image)));
+            Cart::add(array('id' => $id, 'name' => $product->name, 'qty' => $qty, 'price' => $product->promotion_price, 'options' =>array('img' => $product->image_url)));
         }
         $content = Cart::Content();
         return $content;
