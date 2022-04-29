@@ -87,7 +87,7 @@
                                 <ul style="width:120px">
                                     <li>
 
-                                        <a href="{{url('admin/dashboard')}}"><i class="fas fa-user-circle u-s-m-r-6"></i>
+                                        <a href="{{url('cp/dashboard')}}"><i class="fas fa-user-circle u-s-m-r-6"></i>
 
                                             <span>Admin Page</span></a></li>
                                 </ul>

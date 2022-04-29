@@ -12,7 +12,6 @@
         content="AdminWrap Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
     <title>Qcam Admin</title>
-    <link rel="canonical" href="https://www.wrappixel.com/templates/adminwrap-lite/" />
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="/admin/assets/images/favicon.png">
     <!-- Bootstrap Core CSS -->
@@ -101,13 +100,13 @@
     <!-- Bootstrap popper Core JavaScript -->
     <script src="/admin/assets/node_modules/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- slimscrollbar scrollbar JavaScript -->
-    <script src="js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="/admin/js/perfect-scrollbar.jquery.min.js"></script>
     <!--Wave Effects -->
-    <script src="js/waves.js"></script>
+    <script src="/admin/js/waves.js"></script>
     <!--Menu sidebar -->
-    <script src="js/sidebarmenu.js"></script>
+    <script src="/admin/js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
-    <script src="js/custom.min.js"></script>
+    <script src="/admin/js/custom.min.js"></script>
     <!-- ============================================================== -->
     <!-- This page plugins -->
     <!-- ============================================================== -->
