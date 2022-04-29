@@ -33,4 +33,9 @@ class Product extends Model
     {
         return Storage::url($this->image);
     }
+
+    public function category()
+    {
+        return $this->hasOne(Category::class, 'id', 'category_id');
+    }
 }

@@ -61,7 +61,7 @@
                                             <div class="table-p__box">
                                                 <div class="table-p__img-wrap">
 
-                                                    <img class="u-img-fluid" src="images/product/{{$item->options->has('img')?$item->options->img:''}}" alt=""></div>
+                                                    <img class="u-img-fluid" src="{{$item->options->has('img')?$item->options->img:''}}" alt=""></div>
                                                 <div class="table-p__info">
 
                                                     <span class="table-p__name">

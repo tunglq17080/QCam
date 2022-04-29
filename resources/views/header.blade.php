@@ -938,7 +938,7 @@
 
                                                     <a class="mini-product__link" href="/product-detail/{{$item->id}}">
 
-                                                        <img class="u-img-fluid" src="images/product/{{$item->options->has('img')?$item->options->img:''}}" alt=""></a></div>
+                                                        <img class="u-img-fluid" src="{{$item->options->has('img')?$item->options->img:''}}" alt=""></a></div>
                                                 <div class="mini-product__info-wrapper">
 
                                                     <span class="mini-product__category">
