@@ -11,6 +11,7 @@ use App\Http\Controllers\BotManController;
 // Admin page
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController as AdminProduct;
+use App\Http\Controllers\Admin\CategoryController as AdminCategory;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +69,16 @@ Route::get('/order-detail', [OrderController::class, 'orderDetail']);
 Route::group(['prefix' => 'cp', 'middleware'=>'isAdmin'], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/getOrders', [DashboardController::class, 'getOrders'])->name('admin.order');
+
+    Route::group(['prefix' => 'categories'], function () {
+        Route::get('/', [AdminCategory::class, 'index'])->name('admin.category');
+        Route::get('/list', [AdminCategory::class, 'search'])->name('admin.category.list');
+        Route::get('/create', [AdminCategory::class, 'create'])->name('admin.category.create');
+        Route::get('/edit/{id}', [AdminCategory::class, 'edit'])->name('admin.category.edit')->where('id', '[0-9]+');
+
+        Route::post('/store', [AdminCategory::class, 'store'])->name('admin.category.store');
+        Route::get('/delete/{id}', [AdminCategory::class, 'delete'])->name('admin.category.delete')->where('id', '[0-9]+');
+    });
 
     Route::group(['prefix' => 'products'], function () {
         Route::get('/', [AdminProduct::class, 'index'])->name('admin.product');
