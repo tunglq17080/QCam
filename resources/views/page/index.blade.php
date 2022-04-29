@@ -206,7 +206,7 @@
 
                                                 <a class="aspect aspect--bg-grey aspect--square u-d-block" href="product-detail.html">
 
-                                                    <img class="aspect__img" src="images/product/{{$product->image}}" alt=""></a>
+                                                    <img class="aspect__img" src="{{ $product->image_url }}" alt=""></a>
                                                 <div class="product-o__action-wrap">
                                                     <ul class="product-o__action-list">
                                                         <li>
@@ -293,7 +293,7 @@
 
                                 <a class="aspect aspect--bg-grey aspect--square u-d-block" href="product-detail.html">
 
-                                    <img class="aspect__img" src="images/product/{{$deal_of_day->image}}" alt=""></a>
+                                    <img class="aspect__img" src="{{ $deal_of_day->image_url }}" alt=""></a>
                                 <div class="product-o__special-count-wrap">
                                     <div class="countdown countdown--style-special" data-countdown="2020/05/01"></div>
                                 </div>
@@ -407,7 +407,7 @@
 
                                     <a class="aspect aspect--bg-grey aspect--square u-d-block" href="product-detail.html">
 
-                                        <img class="aspect__img" src="images/product/{{$new_arrival->image}}" alt=""></a>
+                                        <img class="aspect__img" src="{{$new_arrival->image_url}}" alt=""></a>
                                     <div class="product-o__action-wrap">
                                         <ul class="product-o__action-list">
                                             <li>
