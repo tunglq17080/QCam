@@ -1,11 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use Cart;
 use App\Models\Product;
+use Cart;
 use Illuminate\Http\Request;
 use Response;
-use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
@@ -17,21 +16,27 @@ class CartController extends Controller
 
     public function addItemCart($id) 
     {
-        // $product = Product::findOrFail($id);
-        $product = DB::table('products')
+         $product = Product::with('category')->findOrFail($id);
+        /*$product = DB::table('products')
         ->select('categories.slug as cat_slug', 'products.*')
         ->join('categories', 'products.category_id', '=', 'categories.id')
-        ->where('products.id',$id)->first();
+        ->where('products.id',$id)->first();*/
 
-        if($product->promotion_price == 0) {
-            Cart::add(array('id' => $id, 'name' => $product->name, 'qty' => 1, 'price' => $product->unit_price, 'options' =>array('img' =>
-                                                                                                                                      $product->image_url, 'cat_slug' => $product->cat_slug)));
-        }
-        else {
-            Cart::add(array('id' => $id, 'name' => $product->name, 'qty' => 1, 'price' => $product->promotion_price, 'options' =>array('img' => $product->image_url, 'cat_slug' => $product->cat_slug)));
-        }
-        $content = Cart::Content();
-        return $content;   
+        $productToCart = [
+            'id'      => $id,
+            'name'    => $product->name,
+            'qty'     => 1,
+            'price'   => $product->promotion_price == 0 ? $product->unit_price : $product->promotion_price,
+            'options' => [
+                'img'      =>
+                    $product->image_url,
+                'cat_slug' => $product->category->cat_slug,
+            ],
+        ];
+
+        Cart::add($productToCart);
+
+        return Cart::Content();
     }
 
     public function listCart()
@@ -65,16 +70,21 @@ class CartController extends Controller
     }
     public function addItemCartQty(Request $request,$id)
     {
-        $product = Product::findOrFail($id);
-        $qty = $request->qty;
-        if($product->promotion_price == 0) {
-            Cart::add(array('id' => $id, 'name' => $product->name, 'qty' => $qty, 'price' => $product->unit_price, 'options' =>array('img' => $product->image_url)));
-        }
-        else {
-            Cart::add(array('id' => $id, 'name' => $product->name, 'qty' => $qty, 'price' => $product->promotion_price, 'options' =>array('img' => $product->image_url)));
-        }
-        $content = Cart::Content();
-        return $content;
+        $product = Product::with('category')->findOrFail($id);
+        $productToCart = [
+            'id'      => $id,
+            'name'    => $product->name,
+            'qty'     => $request->qty,
+            'price'   => $product->promotion_price == 0 ? $product->unit_price : $product->promotion_price,
+            'options' => [
+                'img'      =>
+                    $product->image_url,
+                'cat_slug' => $product->category->cat_slug,
+            ],
+        ];
+        Cart::add($productToCart);
+
+        return Cart::Content();
     }
 
 }

@@ -186,7 +186,7 @@
                                             <div class="o-card__flex">
                                                 <div class="o-card__img-wrap">
 
-                                                    <img class="u-img-fluid" src="images/product/{{$item->options->has('img')?$item->options->img:''}}" alt=""></div>
+                                                    <img class="u-img-fluid" src="{{$item->options->has('img')?$item->options->img:''}}" alt=""></div>
                                                 <div class="o-card__info-wrap">
 
                                                     <span class="o-card__name">
